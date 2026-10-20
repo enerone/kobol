@@ -1,0 +1,14 @@
+# Installed into Hermes' persistent volume by scripts/bootstrap.sh.
+model:
+  provider: omniroute
+  default: auto
+
+providers:
+  omniroute:
+    name: OmniRoute
+    api: http://omniroute:20128/v1
+    key_env: OMNIROUTE_API_KEY
+    transport: chat_completions
+    default_model: auto
+    context_length: 128000
+    discover_models: true

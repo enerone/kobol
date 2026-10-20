@@ -1,0 +1,8 @@
+.env
+data/
+!.gitkeep
+
+# Local orchestration/runtime state
+.claude-flow/
+.swarm/
+ruvector.db
