@@ -46,6 +46,14 @@ For direct OpenAI use without OmniRoute, run `docker compose exec hermes hermes 
 
 In OmniRoute choose **OpenAI Codex (App-Server)** and **Sign in with ChatGPT**. The sidecar runs the official Codex CLI, stores OAuth in its own Docker volume and refreshes it normally. Do not choose the legacy `codex` connection that replays an OAuth token through the proxy. A ChatGPT subscription has usage limits and any optional ChatGPT credits remain separate from API credits.
 
+If dashboard/device authentication cannot reach OpenAI but the host Codex CLI is already authenticated, import that official session into the private Docker volume:
+
+```bash
+./scripts/import-codex-auth.sh
+```
+
+The script never prints or commits the token. Each teammate imports their own session.
+
 ## Local decision layer
 
 Jev is a hosted early-access System One model: structured decisions with confidence, not a locally downloadable model. The closest practical local-first path is `semantic-router>=1` with FastEmbed. It runs locally, supports calibrated confidence and exposes a future upgrade path to Jev through its `DecisionRouter`.
