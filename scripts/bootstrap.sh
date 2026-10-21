@@ -17,8 +17,9 @@ fi
 
 docker compose config --quiet
 docker compose pull
-docker compose up -d redis omniroute
+docker compose up -d redis codex-app-server omniroute
 
 echo "OmniRoute is starting; run 'docker compose port omniroute 20128' for its host address."
 echo "Complete provider onboarding and create the OMNIROUTE_API_KEY from .env."
+echo "For an existing ChatGPT plan, add OpenAI Codex (App-Server) and use Sign in with ChatGPT."
 echo "Then run: ./scripts/configure-hermes.sh"

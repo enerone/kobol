@@ -8,6 +8,8 @@
 
 Run the official Hermes Agent image with persistent `/opt/data`, its built-in authenticated dashboard, and OmniRoute as a separate authenticated OpenAI-compatible gateway. Bind host ports to loopback. Keep provider credentials outside images and source control.
 
+Use the official Codex CLI in a private app-server sidecar for ChatGPT subscription OAuth. OmniRoute communicates with it over an authenticated internal WebSocket; OAuth state persists in a dedicated Docker volume.
+
 Use a typed decision-service boundary. Prototype it locally with Semantic Router/FastEmbed; retain deterministic policy checks for consequential actions. Evaluate hosted Jev behind that boundary later.
 
 ## Rationale

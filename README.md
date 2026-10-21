@@ -1,6 +1,6 @@
 # Kobol Hermes sandbox
 
-Reproducible, team-shareable Docker stack for Hermes Agent, OmniRoute and Redis. Hermes uses its official dashboard for the visual interface and calls OmniRoute through the private Compose network.
+Reproducible, team-shareable Docker stack for Hermes Agent, OmniRoute, an official Codex CLI sidecar and Redis. Hermes uses its official dashboard for the visual interface and calls OmniRoute through the private Compose network.
 
 ## Architecture
 
@@ -10,8 +10,10 @@ Browser -> Hermes dashboard :9119 -> Hermes gateway :8642
                                       v
                               OmniRoute :20128 -> configured GPT/other providers
                                       |
-                                      v
-                                   Redis
+                         +------------+------------+
+                         v                         v
+               Codex app-server                Redis
+               (ChatGPT OAuth)
 ```
 
 All host ports bind to `127.0.0.1` by default. Hermes and OmniRoute require authentication. Persistent state lives in Docker named volumes; secrets live only in the untracked `.env` file.
@@ -39,6 +41,10 @@ Open Hermes at `http://127.0.0.1:9119`. Its OpenAI-compatible API is at `http://
 Configure a GPT-capable provider in OmniRoute and make the desired GPT model (or a combo ending in it) the `auto` route. Hermes sees OmniRoute as a named OpenAI-compatible provider. Provider terms, quotas and rate limits still apply: OmniRoute aggregates routes and performs fallback/compression; it cannot create genuinely unlimited tokens.
 
 For direct OpenAI use without OmniRoute, run `docker compose exec hermes hermes model`, choose OpenAI or OpenAI Codex, and follow the interactive authentication flow. This changes the persistent Hermes configuration.
+
+### Existing ChatGPT Plus/Pro subscription
+
+In OmniRoute choose **OpenAI Codex (App-Server)** and **Sign in with ChatGPT**. The sidecar runs the official Codex CLI, stores OAuth in its own Docker volume and refreshes it normally. Do not choose the legacy `codex` connection that replays an OAuth token through the proxy. A ChatGPT subscription has usage limits and any optional ChatGPT credits remain separate from API credits.
 
 ## Local decision layer
 
